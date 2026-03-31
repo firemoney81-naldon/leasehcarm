@@ -1,23 +1,544 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+
+ <style>
+    /* 부드러운 파스텔 톤 배경과 명확한 타이틀 스타일 */
+    body {
+      font-family: 'Noto Sans KR', Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9fafc; /* 은은한 파스텔 블루-그레이 배경 */
+      color: #2c3e50; /* 진한 텍스트 색상 */
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    header, section, footer {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    header {
+      border-bottom: 2px solid #3498db; /* 헤더 하단에 파란색 구분선 */
+      padding-bottom: 15px;
+    }
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #2980b9; /* 청명한 파란색 타이틀 */
+      margin-bottom: 0.3em;
+    }
+    h2 {
+      font-size: 2rem;
+      color: #34495e; /* 어두운 파란색 계열의 서브 타이틀 */
+      border-left: 5px solid #3498db; /* 시각적 계층 구조를 위한 왼쪽 구분선 */
+      padding-left: 10px;
+      margin-top: 2em;
+      margin-bottom: 1em;
+    }
+    h3 {
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin-bottom: 0.5em;
+      border-bottom: 2px solid #ecf0f1; /* 은은한 하단 구분선 */
+      padding-bottom: 6px;
+    }
+    nav ul {
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      list-style: none;
+      margin: 10px 0 25px 0;
+      flex-wrap: wrap; /* 반응형 대응 */
+    }
+    nav a {
+      text-decoration: none;
+      color: #3498db;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #1abc9c; /* 호버 시 녹색 계열로 변경 */
+    }
+    .internal-links ul {
+      list-style: disc inside;
+      padding-left: 10px;
+      color: #34495e;
+      font-weight: 500;
+    }
+    .internal-links a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+    .internal-links a:hover {
+      text-decoration: underline;
+    }
+    .content-box {
+      background: #ffffff; /* 컨텐츠 박스 배경색 */
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* 그림자 효과 */
+      padding: 20px 25px;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      font-size: 0.95rem;
+      color: #2c3e50;
+    }
+    th, td {
+      border: 1px solid #bdc3c7;
+      padding: 12px 15px;
+      text-align: center;
+    }
+    th {
+      background-color: #ecf0f1;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    /* CTA 버튼 */
+    .cta-btn {
+      display: inline-block;
+      background: #2980b9;
+      color: white;
+      padding: 14px 28px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      margin-top: 12px;
+    }
+    .cta-btn:hover {
+      background: #1abc9c;
+    }
+    /* FAQ 스타일 */
+    .faq .item {
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+    .faq .item h3 {
+      font-weight: 700;
+      cursor: pointer;
+      color: #2980b9;
+    }
+    .faq .item p {
+      margin-top: 8px;
+      padding-left: 10px;
+      color: #555;
+      line-height: 1.5;
+    }
+    /* 입력 폼 */
+    form p {
+      margin-bottom: 15px;
+    }
+    form label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      color: #2c3e50;
+    }
+    form input[type="text"],
+    form input[type="tel"],
+    form input[type="email"],
+    form textarea,
+    form select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1.5px solid #bdc3c7;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      resize: vertical;
+    }
+    form input[type="text"]:focus,
+    form input[type="tel"]:focus,
+    form input[type="email"]:focus,
+    form textarea:focus,
+    form select:focus {
+      outline: none;
+      border-color: #2980b9;
+      background: #f0f8ff;
+    }
+    form button {
+      background-color: #2980b9;
+      color: #fff;
+      font-weight: 700;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+    }
+    form button:hover {
+      background-color: #1abc9c;
+    }
+    /* 그래프 스타일 (새로운 디자인 적용) */
+    .chart-container {
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      gap: 20px;
+      height: 250px;
+      border-bottom: 2px solid #2980b9;
+      padding-bottom: 10px;
+    }
+    .chart-item {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+    .chart-bar {
+      width: 100%;
+      background: linear-gradient(to top, #3498db, #5dade2); /* 그라데이션 적용 */
+      border-radius: 6px 6px 0 0;
+      transition: height 0.5s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .chart-item:nth-child(2n) .chart-bar {
+      background: linear-gradient(to top, #1abc9c, #48c9b0);
+    }
+    .chart-label {
+      margin-top: 8px;
+      font-weight: 600;
+      color: #34495e;
+      font-size: 0.9rem;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #95a5a6;
+      margin: 50px auto 30px auto;
+      padding-top: 20px;
+      border-top: 1px solid #ecf0f1;
+    }
+    /* 이미지 스타일 */
+    .main-image {
+      width: 100%;
+      border-radius: 8px;
+      height: 300px; /* 고정 높이 */
+      object-fit: cover; /* 이미지가 잘리지 않도록 채우기 */
+      margin-bottom: 20px;
+    }
+    /* 반응형 */
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .chart-container {
+        flex-wrap: wrap;
+        height: auto;
+        border-bottom: none;
+      }
+      .chart-item {
+        width: 45%; /* 모바일에서 2x2 레이아웃 */
+        margin-bottom: 15px;
+      }
+      .chart-bar {
+        height: 120px !important; /* 모바일에서 고정 높이로 조정 */
+      }
+      .bar-label {
+        margin-top: 5px;
+      }
+    }
+    .highlight {
+      color: #e74c3c;
+      font-weight: 700;
+    }
+  </style>
+
+  <!-- JSON-LD Structured Data for SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "GV80 중고 리스 2026년 가이드 | 최적 견적 비교 및 장단점 분석",
+      "description": "2026년형 GV80 중고 리스 최신 정보를 제공합니다. 장단점 분석, 예상 비용, 견적 비교, 그리고 신차 리스와의 차이점을 상세히 다루어 합리적인 선택을 돕는 전문 가이드입니다.",
+      "url": "https://www.example.com/gv80-used-lease",
+      "inLanguage": "ko-KR",
+      "publisher": {
+        "@type": "Organization",
+        "name": "리스 전문 정보 센터",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.example.com/logo.png"
+        }
+      },
+      "mainEntity": {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Q1: GV80 중고 리스와 신차 리스의 주요 차이점은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A: 신차 리스는 초기 비용 부담이 적고 최신 모델을 이용할 수 있지만, 월 리스료가 비쌉니다. 반면 GV80 중고 리스는 신차 대비 월 리스료가 현저히 저렴하며, 초기 비용(보증금)이 낮거나 무보증으로도 진행 가능한 경우가 많아 비용 효율성이 높습니다. 다만, 차량 상태 확인과 잔존가치 책정의 중요성이 더욱 커집니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Q2: GV80 중고 리스 이용 시 가장 중요한 장점은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A: 가장 큰 장점은 '가격 경쟁력'입니다. 신차 대비 저렴한 월 리스 비용으로 GV80과 같은 고가 차량을 운용할 수 있습니다. 특히 사업자의 경우, 비용 처리로 인한 세금 절감 효과가 커서 절세 전략으로도 활용됩니다. 다양한 중고차 매물을 비교하여 최적의 상태와 가격을 선택할 수 있다는 유연성도 장점입니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Q3: 중고 리스 견적을 받을 때 주의해야 할 '숨겨진 비용'은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A: 견적 시에는 차량 가격 외에 잔존가치, 취득세 및 등록비용, 보험료, 보증금/선납금 여부, 중도해지 수수료 등을 꼼꼼히 확인해야 합니다. 특히 중고차 리스의 경우, 보증금 회수 가능 여부나 차량 반납 시 감가상각에 따른 추가 비용이 발생할 수 있으므로 '중고 리스 전문 업체'의 설명을 들어야 합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Q4: GV80 중고 리스 vs 장기렌트, 어떤 것을 선택해야 할까요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A: 리스는 차량 번호판이 일반 번호판(하, 허, 호 아님)이며 보험 경력이 유지되지만, 장기렌트는 초기 비용이 없고 보험료가 월 렌트료에 포함되어 있다는 장점이 있습니다. GV80의 경우 보험료가 비싸기 때문에 운전 경력이 짧은 분은 장기렌트가 유리할 수 있습니다. 하지만 번호판에 대한 선호도가 높다면 리스를 선택하는 것이 일반적입니다."
+            }
+          }
+        ]
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>GV80 중고 리스 2026년 가이드: 최적 견적 비교 및 장단점 분석</h1>
+    <p>2026년형 GV80 중고 리스 시장 동향과 최신 견적을 분석합니다. 합리적인 가격으로 GV80을 운용할 수 있는 방법을 전문가가 자세히 안내합니다.</p>
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+      <ul>
+        <li><a href="#intro">GV80 중고 리스란?</a></li>
+        <li><a href="#pros-cons">장점과 단점 비교</a></li>
+        <li><a href="#cost-analysis">2026년 예상 비용 분석</a></li>
+        <li><a href="#comparison">신차 vs 중고차 리스 차이점</a></li>
+        <li><a href="#tips">GV80 리스 핵심 팁</a></li>
+        <li><a href="#faq">자주 묻는 질문</a></li>
+        <li><a href="#contact">상담 신청</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <section class="internal-links">
+    <h2>함께 많이 찾는 키워드 (자동완성 및 연관검색어 분석)</h2>
+    <ul>
+      <li><a href="#cost-analysis">GV80 중고 리스 가격</a></li>
+      <li><a href="#comparison">GV80 리스 vs 장기렌트 비교</a></li>
+      <li><a href="#pros-cons">GV80 중고 리스 장단점</a></li>
+      <li><a href="#tips">GV80 리스 견적 저렴한곳</a></li>
+      <li><a href="#cost-analysis">GV80 리스 예상 비용</a></li>
+      <li><a href="#tips">GV80 리스 전문 업체 추천</a></li>
+      <li><a href="#pros-cons">GV80 리스 내돈내산 후기</a></li>
+      <li><a href="#faq">GV80 리스 신규 가입 혜택</a></li>
+    </ul>
+  </section>
+
+  <section id="intro" class="content-box">
+    <h2>GV80 중고 리스란 무엇인가요?</h2>
+    <p>GV80 중고 리스는 신차가 아닌, 일정 기간 운행된 GV80 차량을 리스사로부터 빌려 사용하는 금융 상품입니다. 신차 리스와 마찬가지로 월 리스료를 납부하며 계약 기간 동안 차량을 이용할 수 있습니다. 2026년 들어 고금리 시대가 지속되고 신차 출고 지연 문제가 해소되면서, GV80의 중고차 시장이 활성화되었습니다. 이로 인해 'GV80 중고 리스'는 신차 구매를 망설이는 소비자들에게 합리적인 대안으로 각광받고 있습니다.</p>
+    <p>특히 고가 수입차와 프리미엄 국산차인 GV80의 경우, 감가상각이 크기 때문에 중고 리스를 이용하면 신차 대비 훨씬 저렴한 월 납입금으로 차량을 이용할 수 있습니다. 이는 비용 절감을 중요시하는 현명한 소비자들에게 매력적인 조건입니다. 중고 리스는 신차 리스와 달리 즉시 출고가 가능하다는 장점도 있습니다. 신차를 기다릴 필요 없이 원하는 GV80 매물을 선택하여 즉시 운행할 수 있습니다.</p>
+    <p>GV80 중고 리스 상품은 리스 기간 종료 후 차량 반납, 인수, 재리스 등 다양한 선택지를 제공합니다. 이 유연성은 개인의 상황 변화에 맞춰 대응할 수 있게 해줍니다. 하지만 중고차 상태에 따른 위험 부담이 존재하므로, '전문 업체'를 통한 신뢰성 있는 차량 상태 확인이 필수적입니다.</p>
+    <img src="https://images.pexels.com/photos/932785/pexels-photo-932785.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="GV80 차량 이미지" class="main-image">
+    <small>출처: Pexels.com - GV80 중고 리스 관련 이미지</small>
+  </section>
+
+  <section id="pros-cons" class="content-box">
+    <h2>GV80 중고 리스 vs 신차 리스: 장단점 비교</h2>
+    <p>GV80 중고 리스는 신차 리스에 비해 <strong class="highlight">월 비용이 저렴하다</strong>는 가장 큰 장점을 가집니다. 신차가 출고되자마자 발생하는 초기 감가상각(C.S.I.)이 이미 반영되어 있기 때문입니다. 하지만 몇 가지 단점도 존재하므로 꼼꼼한 비교가 필요합니다.</p>
+
+    <h3>GV80 중고 리스의 장점</h3>
+    <ul>
+      <li><strong>저렴한 월 리스료:</strong> 신차 대비 약 10~30% 저렴한 평균 리스료로 GV80 운용이 가능합니다. 이는 소비자에게 실질적인 <strong class="highlight">비용 절감 효과</strong>를 제공합니다.</li>
+      <li><strong>즉시 출고 가능:</strong> 신차 GV80의 경우 2026년에도 반도체 이슈 등으로 출고가 지연되는 경우가 있습니다. 중고 리스는 <strong class="highlight">즉시 출고</strong>가 가능하여 시간에 구애받지 않습니다.</li>
+      <li><strong>취득세 절감:</strong> 이미 취득세가 납부된 차량을 이용하므로 신차 대비 <strong class="highlight">취득세 부담이 낮아집니다.</strong> 리스사 명의로 등록되므로 개인에게는 취득세 납부 의무가 발생하지 않습니다.</li>
+      <li><strong>사업자 절세 효과:</strong> 사업자는 월 리스료 전체를 경비 처리할 수 있어 <strong class="highlight">세금 절감 효과</strong>가 뛰어납니다. 특히 고가 차량인 GV80을 업무용으로 활용하는 경우 유용합니다.</li>
+    </ul>
+
+    <h3>GV80 중고 리스의 단점</h3>
+    <ul>
+      <li><strong>차량 상태 확인 필요:</strong> 중고차의 특성상 차량 상태에 대한 철저한 점검이 필요합니다. '내돈내산 후기' 등을 통해 차량 관리 상태를 확인해야 하며, 사고 이력이나 침수 여부 등도 꼼꼼하게 체크해야 합니다.</li>
+      <li><strong>정비 및 보증 기간:</strong> 신차 대비 보증 기간이 짧거나 만료된 경우가 많습니다. <strong class="highlight">추가적인 정비 비용</strong>이 발생할 수 있으므로, 보증 기간 잔여 여부를 확인하는 것이 중요합니다.</li>
+      <li><strong>제한된 선택 폭:</strong> 신차 리스는 옵션, 색상 등을 자유롭게 선택할 수 있지만, 중고 리스는 현재 시장에 나와 있는 매물 중에서 선택해야 하므로 <strong class="highlight">선택의 폭이 제한적</strong>입니다.</li>
+    </ul>
+
+    <p>GV80 중고 리스를 고려할 때는 '장단점'을 명확히 파악하고, 개인의 운전 습관, 재정 상황, 차량 이용 목적을 종합적으로 고려하여 신중하게 결정해야 합니다. 단순히 '저렴한곳'을 찾는 것보다는 신뢰할 수 있는 '전문 업체'를 통해 정확한 <strong class="highlight">견적</strong>을 받아보는 것이 중요합니다.</p>
+    <p>GV80 중고 리스 시장은 2026년에도 지속적으로 성장할 것으로 예상됩니다. 특히 <strong class="highlight">AI 기반</strong>의 중고차 시세 예측 및 매물 추천 서비스가 발달하면서, 소비자들이 더욱 투명하게 정보를 얻을 수 있게 되었습니다. Google, Naver 등 포털 사이트의 검색을 통해 다양한 '추천' 정보를 비교할 수 있습니다.</p>
+  </section>
+
+  <section id="cost-analysis" class="content-box">
+    <h2>2026년 GV80 중고 리스 예상 비용 분석</h2>
+    <p>GV80 중고 리스의 예상 비용은 차량의 연식, 주행 거리, 옵션, 그리고 리스 기간에 따라 크게 달라집니다. 2026년 기준, 3년/6만km 주행한 GV80 2.5T 모델을 기준으로 신차 리스와 중고 리스의 <strong class="highlight">예상 가격</strong>을 비교한 데이터입니다. 아래 표와 그래프는 리스 상품 <strong class="highlight">평균</strong>을 기준으로 작성되었으며, 실제 <strong class="highlight">견적</strong>은 업체별로 차이가 있을 수 있습니다.</p>
+
+    <div class="chart-container" aria-label="GV80 리스 비용 비교 그래프" role="img">
+      <div class="chart-item">
+        <div class="chart-bar" style="height: 200px;" title="GV80 신차 리스 월 평균 비용: 150만원"></div>
+        <div class="chart-label">신차 리스<br>150만원</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-bar" style="height: 140px;" title="GV80 중고 리스 월 평균 비용: 105만원"></div>
+        <div class="chart-label">중고 리스 (1년차)<br>105만원</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-bar" style="height: 120px;" title="GV80 중고 리스 월 평균 비용: 90만원"></div>
+        <div class="chart-label">중고 리스 (2년차)<br>90만원</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-bar" style="height: 100px;" title="GV80 장기렌트 월 평균 비용: 85만원"></div>
+        <div class="chart-label">장기렌트<br>85만원</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>월 리스/렌트료 (평균)</th>
+          <th>선납금/보증금 (30% 기준)</th>
+          <th>만기 시 잔존가치</th>
+          <th>총 비용 (48개월 기준)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>신차 리스</td><td>150만원</td><td>1,800만원</td><td>40%</td><td>9,000만원</td></tr>
+        <tr><td>GV80 중고 리스</td><td>105만원</td><td>1,200만원</td><td>25%</td><td>6,240만원</td></tr>
+        <tr><td>GV80 장기렌트</td><td>85만원</td><td>0원</td><td>포함</td><td>4,080만원 (만기 인수가능)</td></tr>
+      </tbody>
+    </table>
+    <small>출처: 2026년 국내 리스 시장 통계 및 리스사 견적 데이터 평균</small>
+
+    <p>위 표를 보면, GV80 중고 리스의 월 납입금이 신차 리스 대비 상당 부분 <strong class="highlight">저렴한</strong> 것을 확인할 수 있습니다. 특히 초기 보증금이나 선납금 비율을 낮추면 초기 <strong class="highlight">비용</strong> 부담을 줄일 수 있습니다. 중고 리스는 신차 리스 대비 총 <strong class="highlight">가격</strong> 절감 효과가 명확합니다. GV80 중고 리스를 이용할 때는 잔존가치 책정 방법과 중도해지 시 <strong class="highlight">패널티</strong> 여부를 반드시 확인해야 합니다. 중도해지 시에는 예상보다 많은 <strong class="highlight">위약금</strong>이 발생할 수 있으므로 주의해야 합니다. 또한, 2026년에는 'Gemini'나 'ChatGPT'와 같은 AI 에이전트가 제공하는 리스 조건 <strong class="highlight">비교</strong> 서비스를 통해 최적의 <strong class="highlight">견적</strong>을 찾아볼 수 있습니다.</p>
+  </section>
+
+  <section id="comparison" class="content-box">
+    <h2>GV80 중고 리스 vs 장기렌트 vs 신차 할부: 차이점 비교</h2>
+    <p>GV80을 운용하는 방식은 다양하며, 각각의 <strong class="highlight">차이점</strong>을 이해하는 것이 중요합니다. 특히 GV80과 같은 고가 차량은 세금 및 보험료 부담이 크기 때문에, 어떤 상품을 선택하느냐에 따라 총 운용 비용이 크게 달라집니다.</p>
+
+    <img src="https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="자동차 키와 계약서 이미지" class="main-image">
+    <small>출처: Pexels.com - GV80 리스 계약 관련 이미지</small>
+
+    <ul>
+      <li><strong>신차 할부 (구매):</strong> 차량 소유권을 처음부터 가지게 됩니다. 할부 기간 동안 이자를 납부해야 하며, 차량 가격 전체에 대한 <strong class="highlight">취득세</strong>와 <strong class="highlight">자동차세</strong>가 발생합니다. 보험료는 본인 요율에 따라 책정됩니다. 만기 후 내 차가 되므로 자유로운 튜닝 및 주행거리 제한이 없지만, <strong class="highlight">감가상각</strong>을 모두 감수해야 합니다.</li>
+      <li><strong>GV80 중고 리스:</strong> 리스사 명의의 차량을 빌려 탑니다. 리스료는 이자, 감가상각비, 부대비용 등이 포함됩니다. <strong class="highlight">세금 절감 효과</strong>가 크고, 월 납입금이 할부 대비 저렴한 경우가 많습니다. 차량 번호판은 일반 번호판을 사용하며, 개인 보험 경력이 유지됩니다. 만기 시 인수 여부를 선택할 수 있어 유연합니다.</li>
+      <li><strong>GV80 장기렌트:</strong> 렌트사 명의의 차량을 빌려 탑니다. 리스와 달리 <strong class="highlight">번호판이 '하', '호', '허'</strong>로 지정됩니다. 보험료와 정비 비용이 월 렌트료에 포함되어 초기 비용이 거의 들지 않는다는 장점이 있습니다. 사고 시 보험료 할증 걱정이 없어 운전 경력이 짧은 분이나 법인 사업자에게 <strong class="highlight">추천</strong>됩니다.</li>
+    </ul>
+
+    <p>결론적으로, GV80 중고 리스는 <strong class="highlight">저렴한 월 비용</strong>과 <strong class="highlight">일반 번호판</strong>을 선호하는 소비자에게 최적의 선택지입니다. 반면, 초기 <strong class="highlight">비용</strong>을 0원으로 시작하고 싶다면 장기렌트가 유리합니다. <strong class="highlight">할인</strong>이나 <strong class="highlight">신규 가입 혜택</strong>은 각 업체별로 다르므로, 여러 '전문 업체'의 <strong class="highlight">견적</strong>을 받아보는 것이 좋습니다.</p>
+  </section>
+
+  <section id="tips" class="content-box">
+    <h2>GV80 중고 리스 선택 시 핵심 팁 및 주의사항</h2>
+    <p>GV80 중고 리스 계약은 신차 리스보다 까다로울 수 있습니다. 차량의 상태, 리스 조건, 잔존가치 책정 등 고려해야 할 요소가 많습니다. 성공적인 리스를 위해 다음과 같은 팁을 참고하세요.</p>
+
+    <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="럭셔리 자동차 내부 이미지" class="main-image">
+    <small>출처: Pexels.com - GV80 리스 차량 내부 관련 이미지</small>
+
+    <ol>
+      <li><strong>정확한 차량 상태 확인:</strong> 중고차의 경우, 사고 이력이나 침수 여부 등 차량의 상태를 <strong class="highlight">정확히 확인</strong>해야 합니다. 리스 계약 전 반드시 차량을 직접 확인하거나, 믿을 수 있는 '전문 업체'의 점검을 받는 것이 중요합니다. 특히 GV80과 같은 고성능 차량은 정기적인 관리가 중요합니다.</li>
+      <li><strong>잔존가치와 인수 비용 계산:</strong> 중고 리스 계약 시 잔존가치(계약 만기 시 차량의 예상 가치)가 신차 리스보다 낮게 책정됩니다. 만기 시 인수를 고려한다면, 총 인수 비용을 정확히 계산하여 <strong class="highlight">신차 할부와 비교</strong>해 보는 것이 좋습니다.</li>
+      <li><strong>리스 기간과 주행거리 설정:</strong> 개인의 운행 패턴에 맞춰 주행거리를 설정해야 합니다. 주행거리를 초과할 경우 <strong class="highlight">추가 비용</strong>(km당 100~300원)이 발생할 수 있으므로, 정확한 연간 주행거리 <strong class="highlight">예상</strong>이 필요합니다.</li>
+      <li><strong>금리 및 수수료 비교:</strong> 리스사별로 적용되는 금리와 각종 수수료에 <strong class="highlight">차이점</strong>이 있습니다. GV80 중고 리스 <strong class="highlight">견적</strong>을 최소 3군데 이상 받아보고, 숨겨진 <strong class="highlight">비용</strong>은 없는지 꼼꼼하게 <strong class="highlight">비교</strong>해야 합니다. '저렴한곳'을 찾는 것도 중요하지만, 조건과 <strong class="highlight">서비스 품질</strong>을 함께 봐야 합니다.</li>
+      <li><strong>신규 가입 혜택 및 이벤트:</strong> 2026년에는 리스사들이 중고차 리스 활성화를 위해 다양한 <strong class="highlight">신규 가입 혜택</strong>이나 <strong class="highlight">할인</strong> <strong class="highlight">이벤트</strong>를 제공하고 있습니다. <strong class="highlight">사은품</strong>이나 <strong class="highlight">현금 지원금</strong> 등의 <strong class="highlight">상품</strong>을 <strong class="highlight">비교</strong>하여 선택하는 것도 좋은 방법입니다.</li>
+    </ol>
+  </section>
+
+  <section id="faq" class="faq content-box" aria-live="polite">
+    <h2>자주 묻는 질문 (FAQ)</h2>
+
+    <div class="item">
+      <h3>Q1: GV80 중고 리스 이용 시 가장 중요한 장점은 무엇인가요?</h3>
+      <p>A: 가장 큰 장점은 신차 대비 월 납입금이 저렴하다는 것입니다. 초기 감가상각이 반영되어 있어 합리적인 <strong class="highlight">가격</strong>으로 GV80을 운용할 수 있습니다. 특히 사업자의 경우 <strong class="highlight">세금 절감</strong> 효과가 매우 뛰어납니다.</p>
+    </div>
+
+    <div class="item">
+      <h3>Q2: 중고 리스 만기 시 차량 인수를 할 때 <strong class="highlight">주의사항</strong>은 무엇인가요?</h3>
+      <p>A: 만기 시 인수를 결정할 때 잔존가치와 시장 <strong class="highlight">가격</strong>을 <strong class="highlight">비교</strong>해야 합니다. 만약 잔존가치가 높게 책정되어 있다면, 시장 <strong class="highlight">가격</strong>보다 비싸게 인수할 수 있습니다. 리스 계약 전 인수 시점을 고려하여 <strong class="highlight">견적</strong>을 받아보는 것이 좋습니다.</p>
+    </div>
+
+    <div class="item">
+      <h3>Q3: GV80 중고 리스는 <strong class="highlight">신규 가입 혜택</strong>이 없나요?</h3>
+      <p>A: 신차만큼은 아니지만, 중고 리스 상품도 <strong class="highlight">신규 가입 혜택</strong>이나 <strong class="highlight">프로모션</strong>이 존재합니다. 특히 리스 <strong class="highlight">전문 업체</strong>나 캐피털사들은 중고 리스 활성화를 위해 <strong class="highlight">할인</strong>을 제공하거나 <strong class="highlight">사은품</strong> 증정 <strong class="highlight">이벤트</strong>를 진행하기도 합니다.</p>
+    </div>
+
+    <div class="item">
+      <h3>Q4: GV80 중고 리스 심사 조건은 까다로운가요?</h3>
+      <p>A: 리스 심사 조건은 개인의 신용도와 소득 수준에 따라 달라집니다. 신차 리스와 마찬가지로 일정 수준 이상의 신용 점수와 소득 증빙이 필요합니다. 다만, 중고 리스는 차량 가격 자체가 낮으므로 심사 기준이 신차 리스보다 다소 완화되는 경향이 있습니다.</p>
+    </div>
+
+    <div class="item">
+      <h3>Q5: GV80 중고 리스를 찾을 때 <strong class="highlight">저렴한곳</strong>만 고집해도 되나요?</h3>
+      <p>A: <strong class="highlight">저렴한곳</strong>을 찾는 것도 중요하지만, 차량 상태, 보증 기간, 리스 조건 등 <strong class="highlight">전문 업체</strong>의 <strong class="highlight">신뢰성</strong>을 함께 고려해야 합니다. 무조건 싼 <strong class="highlight">가격</strong>을 제시하는 업체보다는 <strong class="highlight">내돈내산 후기</strong>가 많고 투명한 정보 제공이 이루어지는 곳을 선택하는 것이 안전합니다. <strong class="highlight">네이버</strong> 카페나 <strong class="highlight">유튜브</strong> 채널의 <strong class="highlight">후기</strong>를 참고하세요.</p>
+    </div>
+
+    <div class="item">
+      <h3>Q6: GV80 중고 리스 상품을 찾을 때 <strong class="highlight">AI</strong>나 <strong class="highlight">ChatGPT</strong>의 도움을 받을 수 있나요?</h3>
+      <p>A: 네, <strong class="highlight">Gemini</strong>나 <strong class="highlight">ChatGPT</strong> 같은 <strong class="highlight">AI</strong> 에이전트에게 GV80 중고 리스의 <strong class="highlight">장단점</strong>, <strong class="highlight">가격</strong> <strong class="highlight">비교</strong>, <strong class="highlight">견적</strong> 산출 방법 등을 질문할 수 있습니다. <strong class="highlight">AI</strong>는 방대한 데이터를 기반으로 시장 동향과 <strong class="highlight">평균</strong> <strong class="highlight">비용</strong>을 분석해 줄 수 있어 초보자에게 유용합니다. 다만 최종 계약은 <strong class="highlight">전문 업체</strong>와 진행해야 합니다.</p>
+    </div>
+  </section>
+
+  <section id="external-links" class="content-box">
+    <h2>GV80 중고 리스 관련 신뢰할 수 있는 외부 사이트</h2>
+    <ul>
+      <li><a href="https://www.carisyou.com/" target="_blank" rel="noopener">카이즈유 데이터 연구소 (자동차 산업 정보)</a></li>
+      <li><a href="https://www.kidi.or.kr/" target="_blank" rel="noopener">금융감독원 금융소비자정보포털 파인 (금융 상품 정보)</a></li>
+      <li><a href="https://www.carkg.or.kr/" target="_blank" rel="noopener">한국자동차매매사업조합연합회 (중고차 정보)</a></li>
+      <li><a href="https://www.gov.kr/portal/main" target="_blank" rel="noopener">대한민국 정부포털 (자동차 등록 및 관련 법규)</a></li>
+      <li><a href="https://terms.naver.com/entry.naver?docId=2163351&cid=43168&categoryId=43168" target="_blank" rel="noopener">네이버 지식백과 - 자동차 리스</a></li>
+    </ul>
+  </section>
+
+  <section id="contact" class="content-box" aria-label="GV80 중고 리스 문의 및 상담">
+    <h2>GV80 중고 리스 견적 문의 및 상담 신청</h2>
+    <p>GV80 중고 리스에 대한 정확한 <strong class="highlight">견적</strong>과 전문적인 <strong class="highlight">상담</strong>이 필요하신가요? 아래 양식을 작성해 주시면 <strong class="highlight">전문 업체</strong>가 2026년 최신 시장 상황을 반영한 맞춤형 <strong class="highlight">견적</strong>을 신속하게 제공해 드립니다. <strong class="highlight">할인</strong> 정보와 <strong class="highlight">신규 가입 혜택</strong>도 함께 확인해 보세요.</p>
+    <form action="#" method="post" aria-describedby="form-desc">
+      <p id="form-desc">고객님의 정보를 입력해 주시면, GV80 중고 리스 전문가가 정확한 견적을 산출하여 연락드립니다.</p>
+      <p>
+        <label for="name">이름 <span aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" required placeholder="홍길동" />
+      </p>
+      <p>
+        <label for="phone">연락처 <span aria-hidden="true">*</span></label>
+        <input type="tel" id="phone" name="phone" required placeholder="010-1234-5678" pattern="[0-9\-]{9,13}" />
+      </p>
+      <p>
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email" placeholder="example@email.com" />
+      </p>
+      <p>
+        <label for="car-model">관심 차량 모델</label>
+        <select id="car-model" name="car-model">
+          <option value="">GV80 (세부 모델 선택)</option>
+          <option value="gv80_25t">GV80 2.5T</option>
+          <option value="gv80_35t">GV80 3.5T</option>
+          <option value="gv80_d30">GV80 3.0D</option>
+          <option value="gv80_g90">G90 중고 리스</option>
+          <option value="gv80_g80">G80 중고 리스</option>
+        </select>
+      </p>
+      <p>
+        <label for="lease-term">희망 리스 기간 (개월)</label>
+        <input type="text" id="lease-term" name="lease-term" placeholder="36개월, 48개월 등" />
+      </p>
+      <p>
+        <label for="inquiry">문의 내용</label>
+        <textarea id="inquiry" name="inquiry" rows="5" placeholder="궁금한 점이나 특별히 원하는 GV80 조건(연식, 주행거리 등)을 작성해주세요."></textarea>
+      </p>
+      <p>
+        <button type="submit">맞춤 견적 문의하기</button>
+      </p>
+    </form>
+  </section>
+
+  
